@@ -7,7 +7,7 @@ const isCooker = async (req, res, next) => {
       const token = req.headers.authorization.replace("Bearer ", "");
       //console.log(token);
       //Si le token existe, on cherche l'artist dans la BDD
-      const cooker = await Cooker.findOne({ token: token }).select("account id email");
+      const cooker = await Cooker.findOne({ token: token }).select("username id");
       
       if (cooker) {
         //Ajout d'une clé artist à l'objet req contenant les infos de artist
