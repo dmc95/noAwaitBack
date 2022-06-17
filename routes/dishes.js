@@ -24,8 +24,8 @@ router.post('/dishes/publish', isCooker, async (req, res) => {
 			recipe_description: description,
 			recipe_price: price,
 			creator: req.cooker,
-    });
-    
+		});
+
 		// envoi de l'image vers cloudinary
 		const result = await cloudinary.uploader.upload(req.files.picture.path, {
 			folder: `/noAwaitBack/dishes/${newDishes._id}`,
@@ -40,16 +40,14 @@ router.post('/dishes/publish', isCooker, async (req, res) => {
 		res.status(400).json({ error: error.message });
 	}
 });
+//route permettant de récupérer toutes les recettes
+router.get('/dishesAll', async (req, res) => {
+	try {
+		const dishes = await Dishes.find().select("recipe_category recipe_title recipe_description recipe_price recipe_image.secure_url")
+		res.status(200).json(dishes)
+	} catch (error) {
+		res.status(error).json({ error: error.message });
+	}
+});
 
 module.exports = router;
-
-
-//	_id: newDishes._id,
-// recipe_category: newDishes.recipe_category,
-// recipe_title: newDishes.recipe_title,
-// recipe_description: newDishes.recipe_description,
-// recipe_price: newDishes.recipe_price,
-// creator: {
-//   username: newDishes.creator.username,
-//   _id: newDishes.creator._id,
-//   recipe_image: newDishes.recipe_image,

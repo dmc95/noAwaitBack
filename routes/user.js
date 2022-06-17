@@ -35,9 +35,9 @@ router.post("/user/signup", async (req, res) => {
         const token = uid2(64);
         //Créer un nouvel utilisateur
         const newUser = new User({
-          account: {
+          
             username: username,
-          },
+    
           password: password,
           email: email,
           token: token,
@@ -51,7 +51,7 @@ router.post("/user/signup", async (req, res) => {
           _id: newUser._id,
           email: newUser.email,
           token: newUser.token,
-          account: newUser.account,
+          
         });
       } else {
         res.status(400).json({ message: "Missing parameters" });
